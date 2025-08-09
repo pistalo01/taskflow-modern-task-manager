@@ -18,7 +18,7 @@ export function TaskForm({ onTaskCreated }: TaskFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!title.trim()) return
+    if (!title.trim() || !supabase) return
 
     setLoading(true)
     

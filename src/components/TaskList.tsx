@@ -16,6 +16,8 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
   const [loadingTasks, setLoadingTasks] = useState<Set<string>>(new Set())
 
   const toggleTask = async (task: Task) => {
+    if (!supabase) return
+    
     setLoadingTasks(prev => new Set(prev).add(task.id))
     
     try {
@@ -38,7 +40,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
   }
 
   const deleteTask = async (taskId: string) => {
-    if (!confirm('Are you sure you want to delete this task?')) return
+    if (!confirm('Are you sure you want to delete this task?') || !supabase) return
     
     setLoadingTasks(prev => new Set(prev).add(taskId))
     
