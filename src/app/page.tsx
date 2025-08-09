@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { TaskForm } from '@/components/TaskForm'
 import { TaskList } from '@/components/TaskList'
-import { supabase, type Task } from '@/lib/supabase'
+import { getSupabase, type Task } from '@/lib/supabase'
 import { CheckSquare } from 'lucide-react'
 
 export default function Home() {
@@ -11,6 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
 
   const fetchTasks = async () => {
+    const supabase = getSupabase()
     if (!supabase) {
       setLoading(false)
       return
@@ -39,6 +40,7 @@ export default function Home() {
   const totalTasks = tasks.length
 
   // Show configuration message if Supabase is not configured
+  const supabase = getSupabase()
   if (!supabase) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

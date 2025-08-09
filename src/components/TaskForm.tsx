@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 interface TaskFormProps {
   onTaskCreated: () => void
@@ -18,6 +18,7 @@ export function TaskForm({ onTaskCreated }: TaskFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const supabase = getSupabase()
     if (!title.trim() || !supabase) return
 
     setLoading(true)

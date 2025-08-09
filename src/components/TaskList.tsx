@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent } from '@/components/ui/card'
-import { supabase, type Task } from '@/lib/supabase'
+import { getSupabase, type Task } from '@/lib/supabase'
 import { Trash2 } from 'lucide-react'
 
 interface TaskListProps {
@@ -16,6 +16,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
   const [loadingTasks, setLoadingTasks] = useState<Set<string>>(new Set())
 
   const toggleTask = async (task: Task) => {
+    const supabase = getSupabase()
     if (!supabase) return
     
     setLoadingTasks(prev => new Set(prev).add(task.id))
@@ -40,6 +41,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
   }
 
   const deleteTask = async (taskId: string) => {
+    const supabase = getSupabase()
     if (!confirm('Are you sure you want to delete this task?') || !supabase) return
     
     setLoadingTasks(prev => new Set(prev).add(taskId))
